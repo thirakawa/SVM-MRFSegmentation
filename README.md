@@ -15,6 +15,10 @@ All of paramters and directory for dataset are detenoed in settings.py.
 
 #### Execution
     $ sh run.sh
+    
+To clean cache (intermidiate) files,
+
+    $ sh run.sh clean
 
 ## References
 1. T. Hirakawa, T. Tamaki, B. Raytchev, K. Kaneda, T. Koide, Y. Kominami, S. Yoshida, S. Tanaka, "SVM-MRF segmentation of colorectal NBI endoscopic images," In Proc. of the IEEE International Conference of Engineering in Medicine and Biology Society (EMBC2014), pp.4739-4742, (Aug. 2014).
