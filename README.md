@@ -1,7 +1,8 @@
 # SVM-MRF segmentation
 
 This repository includes SVM-MRF segmentation [1].
-
+Negative log values of posterior probabilities obtained from SVM classifier is used for data terms of MRF model.
+For pairwise term, we used constant values range (0, 1) in order to make a segmentation result smooth.
 
 
 ## Execution enviroment

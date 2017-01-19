@@ -12,7 +12,7 @@ import settings as st
 def load_blob_wise_sift(files):
     all_feature_list = []
     for f in files:
-        all_feature_list.append(np.load(f))
+        all_feature_list.append(np.load(f).astype(np.float64))
     return all_feature_list
 
 

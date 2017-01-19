@@ -63,8 +63,8 @@ if __name__ == '__main__':
     extract blob-wise SIFT descriptors and labels
     """
 
-    # compute blob-wise settings
-    st.write_blob_wise_settings()
+    # compute blob-wise size settings
+    st.write_blob_size_property()
 
     train_base = st.get_train_basename()
     test_base = st.get_test_basename()
@@ -74,6 +74,9 @@ if __name__ == '__main__':
     for base in train_base:
         s_arr = blob_wise_sift("%simg/%s.bmp" % (st.work_dir, base))
         l_arr = blob_wise_label("%simg/%s.npy" % (st.work_dir, base))
+        # cast
+        s_arr = s_arr.astype(np.int16)
+        l_arr = l_arr.astype(np.int8)
 
         np.save("%simg/%s%s" % (st.work_dir, base, st.bsift_ext), s_arr)
         np.save("%simg/%s%s" % (st.work_dir, base, st.blab_ext), l_arr)
@@ -82,6 +85,9 @@ if __name__ == '__main__':
     for base in test_base:
         s_arr = blob_wise_sift("%simg/%s.bmp" % (st.work_dir, base))
         l_arr = blob_wise_label("%simg/%s.npy" % (st.work_dir, base))
+        # cast
+        s_arr = s_arr.astype(np.int16)
+        l_arr = l_arr.astype(np.int8)
 
         np.save("%simg/%s%s" % (st.work_dir, base, st.bsift_ext), s_arr)
         np.save("%simg/%s%s" % (st.work_dir, base, st.blab_ext), l_arr)

@@ -19,12 +19,12 @@ def mrf_estimate(prob, i_size, b_size, bound_size):
     # negative log
     neg_prob   = prob[:, 0]
     pos_prob   = prob[:, 1]
-    neg_energy = -np.log(neg_prob).reshape((44, 60))
-    pos_energy = -np.log(pos_prob).reshape((44, 60))
+    neg_energy = -np.log(neg_prob).reshape(b_size)
+    pos_energy = -np.log(pos_prob).reshape(b_size)
 
     # MAP estimate
     g       = maxflow.Graph[float]()
-    nodeids = g.add_grid_nodes((44, 60))
+    nodeids = g.add_grid_nodes(b_size)
     g.add_grid_edges(nodeids, st.mrf_pairwise_scale)
     g.add_grid_tedges(nodeids, pos_energy, neg_energy)
     g.maxflow()
@@ -43,26 +43,32 @@ def mrf_estimate(prob, i_size, b_size, bound_size):
 
 if __name__ == '__main__':
 
-    img_size, blob_size, boundary_size = st.load_blob_wise_settings()
+    train_img_size, train_blob_size, test_img_size, test_blob_size = st.load_blob_size_property()
 
-    # train data
-    train_base = st.get_train_basename()
-    trian_prob_files = ["%simg/%s%s" % (st.work_dir, i, st.prob_ext) for i in train_base]
-    train_prob_list = load_prob_files(trian_prob_files)
+    print "load probability files ........"
+    # print "    train data"
+    # train_base = st.get_train_basename()
+    # trian_prob_files = ["%simg/%s%s" % (st.work_dir, i, st.prob_ext) for i in train_base]
+    # train_prob_list = load_prob_files(trian_prob_files)
 
-    # test data
+    print "    test data"
     test_base = st.get_test_basename()
     test_prob_files = ["%simg/%s%s" % (st.work_dir, i, st.prob_ext) for i in test_base]
     test_prob_list = load_prob_files(test_prob_files)
+    print "load probability files; done."
+    print ""
 
     print "MAP estimate on a MRF model ........."
-    for b, p in zip(train_base, train_prob_list):
-        res = mrf_estimate(p, img_size, blob_size, boundary_size)
-        cv2.imwrite("%simg/%s%s" % (st.work_dir, b, st.result_ext), res)
+    # print "    train data"
+    # for b, p in zip(train_base, train_prob_list):
+    #     res = mrf_estimate(p, train_img_size[b], \
+    #                        train_blob_size[b], st.boundary_size())
+    #     cv2.imwrite("%simg/%s%s" % (st.work_dir, b, st.result_ext), res)
 
-
+    print "    test data"
     for b, p in zip(test_base, test_prob_list):
-        res = mrf_estimate(p, img_size, blob_size, boundary_size)
+        res = mrf_estimate(p, test_img_size[b], \
+                           test_blob_size[b], st.boundary_size())
         cv2.imwrite("%simg/%s%s" % (st.work_dir, b, st.result_ext), res)
     print "MAP estimate; done."
 

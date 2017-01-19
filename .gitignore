@@ -1,2 +1,4 @@
 *.pyc
-
+run_msrc_row2.sh
+msrc_row2/
+n_train/
